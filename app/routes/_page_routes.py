@@ -15,6 +15,14 @@ def index():
     return render_template('index.html')
 
 
+@page_bp.route('/home')
+@login_required
+def home():
+    return render_template(
+        'home.html'
+    )
+
+
 @page_bp.route('/search/')
 def search():
     return render_template('search_page.html')
