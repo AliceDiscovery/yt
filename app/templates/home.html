@@ -9,7 +9,13 @@
 <h1>Home Page</h1>
 <ol>
   {% for channel in channels %}
-  <li><h3>{{ channel.title }}</h3></li>
+  <li>
+    <a href="{{ url_for('main.channel_overview', channel_id=channel.channel_id) }}">
+      <img src="{{ channel.profile_pic }}"></img>
+      <h3>{{ channel.title }}</h3>
+    </a>
+    <p>{{ channel.num_videos }}</p>
+  </li>
   {% endfor %}
 </ol>
 
