@@ -3,7 +3,7 @@ from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from app.youtube_api import YouTubeAPI
 
-from ..database import is_subscribed
+from ..database import is_subscribed, list_subscribed_channels
 
 
 page_bp = Blueprint('main', __name__)
@@ -18,8 +18,11 @@ def index():
 @page_bp.route('/home')
 @login_required
 def home():
+    channels = [youtube.fetch_channel_info(s) for s in list_subscribed_channels(current_user.id)]
+
     return render_template(
-        'home.html'
+        'home.html',
+        channels=channels
     )
 
 

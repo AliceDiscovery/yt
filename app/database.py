@@ -49,6 +49,20 @@ def is_subscribed(user_id: str, channel_id: str):
     return bool(sub)
 
 
+def list_subscribed_channels(user_id: str):
+    user = User.query.get(user_id)
+    if not user:
+        raise ValueError(f'User with ID {user_id} does not exist.')
+
+    sub = (
+        Subscription
+        .query
+        .filter_by(user_id=user_id)
+        .all()
+    )
+    return [s.channel_id for s in sub]
+
+
 def init_db(app):
     db.init_app(app)
     with app.app_context():

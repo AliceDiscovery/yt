@@ -7,4 +7,10 @@
 
 {% block content %}
 <h1>Home Page</h1>
+<ol>
+  {% for channel in channels %}
+  <li><h3>{{ channel.title }}</h3></li>
+  {% endfor %}
+</ol>
+
 {% endblock %}
