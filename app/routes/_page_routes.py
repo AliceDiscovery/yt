@@ -1,5 +1,5 @@
 """ define all webpage routes """
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 from app.youtube_api import YouTubeAPI
 
@@ -12,6 +12,8 @@ youtube = YouTubeAPI()
 
 @page_bp.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
     return render_template('index.html')
 
 
