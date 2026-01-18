@@ -9,9 +9,9 @@ from .request_datatypes.elements import JsonVideoPreviewElement
 from ..youtube_data_convertions import human_readable_large_numbers, convert_iso_duration
 
 
-def fetch_channel_videos(page_token: ApiPageToken) -> PageType:
+def fetch_channel_videos(page_token: ApiPageToken, max_results=50) -> PageType:
     """ fetches the next page of videos uploaded to a specific channel """
-    max_results = 50
+    max_results = max(0, min(max_results, 50))
 
     def run_fetch_channel_videos() -> dict:
         """ fetch channel videos in a separate subprocess """

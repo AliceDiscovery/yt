@@ -312,3 +312,14 @@ class ChannelVideosHandler extends PaginatedPageHandler {
         return createVideoElement(videoData);
     }
 }
+
+class ChannelVideosPreviewHandler extends PageHandler {
+    constructor(feedId, fetchMoreButtonId, pageToken) {
+        super('/data/get-channel-videos', feedId, fetchMoreButtonId);
+	this.pageToken = pageToken;
+    }
+
+    createElement(videoData) {
+        return createVideoElement(videoData);
+    }
+}

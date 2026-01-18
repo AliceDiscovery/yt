@@ -3,6 +3,8 @@
 {% block head %}
 <title>yt - Home</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
+
+<script src="{{ url_for('static', filename='scripts/content_loader.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -10,13 +12,25 @@
 <ol>
   {% for channel in channels %}
   <li>
-    <a href="{{ url_for('main.channel_overview', channel_id=channel.channel_id) }}">
-      <img src="{{ channel.profile_pic }}"></img>
-      <h3>{{ channel.title }}</h3>
+    <a href="{{ url_for('main.channel_overview', channel_id=channel.info.channel_id) }}">
+      <img src="{{ channel.info.profile_pic }}"></img>
+      <h3>{{ channel.info.title }}</h3>
     </a>
-    <p>{{ channel.num_videos }}</p>
+    <p>{{ channel.info.num_videos }}</p>
+    <div id="video-preview-feed-{{ loop.index0 }}"></div>
+    <button id="fetch-more-previews-{{ loop.index0 }}">Fetch More</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+		const channelVideosPreviewHandler = new ChannelVideosPreviewHandler("video-preview-feed-{{ loop.index0 }}", "fetch-more-previews-{{ loop.index0 }}", {{ channel.token|tojson|safe }});
+    	    channelVideosPreviewHandler.fetchMoreData();
+        });
+    </script>
   </li>
   {% endfor %}
+
 </ol>
+<div id="video-feed"></div>
+<button id="fetchMoreVideoPreviewsButton">fetch more previews</button>
 
 {% endblock %}

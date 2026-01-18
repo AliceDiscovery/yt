@@ -14,6 +14,7 @@ youtube = YouTubeAPI()
 
 
 @data_bp.route('/get-channel-videos', methods=['GET'])
+@login_required
 def get_channel_videos():
     page_token_dict = loads(request.headers.get('token', {}))
     page_token = ApiPageToken(**page_token_dict)
@@ -26,6 +27,7 @@ def get_channel_videos():
 
 
 @data_bp.route('/get-search-results', methods=['GET'])
+@login_required
 def get_search_results():
     page_token_dict = loads(request.headers.get('token', {}))
     page_token = ApiPageToken(**page_token_dict)
@@ -38,6 +40,7 @@ def get_search_results():
 
 
 @data_bp.route('/get-comments', methods=['GET'])
+@login_required
 def get_comments():
     page_token_dict = loads(request.headers.get('token', {}))
     page_token = ApiPageToken(**page_token_dict)

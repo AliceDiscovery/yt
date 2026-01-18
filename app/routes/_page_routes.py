@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 from app.youtube_api import YouTubeAPI
+from app.youtube_api.get_requests.request_datatypes import PageType, ApiPageToken
 
 from ..database import is_subscribed, list_subscribed_channels
 
@@ -20,7 +21,12 @@ def index():
 @page_bp.route('/home')
 @login_required
 def home():
-    channels = [youtube.fetch_channel_info(s) for s in list_subscribed_channels(current_user.id)]
+    channels = [
+        {
+            "info": youtube.fetch_channel_info(s),
+            "token": ApiPageToken(channel_id=s).json_compatible_serialize_data()
+        }
+    for s in list_subscribed_channels(current_user.id)]
 
     return render_template(
         'home.html',
