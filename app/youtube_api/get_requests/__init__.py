@@ -13,6 +13,12 @@ class GetRequestsHandler:
         self._api = api
 
     @staticmethod
+    def fetch_channel_videos(channel_id: str) -> PageType:
+        """ fetches the first page of videos uploaded to a specific channel """
+        token = _fetch_channel_videos.create_channel_token(channel_id=channel_id)
+        return _fetch_channel_videos.fetch_channel_videos(token)
+
+    @staticmethod
     def fetch_search_results(search_query: str) -> PageType:
         """ fetches the first page of search results """
         token = _fetch_search_results.create_search_token(search_query=search_query)
