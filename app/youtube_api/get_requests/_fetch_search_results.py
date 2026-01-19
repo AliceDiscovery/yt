@@ -12,7 +12,7 @@ from ..youtube_data_convertions import convert_iso_duration, human_readable_larg
 
 def fetch_search_results(page_token: ApiPageToken) -> PageType:
     """ fetches the next page of search results """
-    max_results = 50
+    max_results = max(0, min(page_token.max_results or 50, 50))
 
     def validate_token():
         if page_token.search_query is None:
@@ -35,6 +35,7 @@ def fetch_search_results(page_token: ApiPageToken) -> PageType:
         new_token = response.get('nextPageToken')
         return ApiPageToken(
             search_query=page_token.search_query,
+            max_results=max_results,
             token=new_token,
             is_last_page=(new_token is None)
         )

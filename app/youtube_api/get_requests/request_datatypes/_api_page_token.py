@@ -9,6 +9,7 @@ class ApiPageToken(JsonDatatypeABC):
             channel_id: str|None = None,
             playlist_id: str|None = None,
             search_query: str|None = None,
+            max_results: int|None = None,
             token: str|None = None,
             is_last_page: bool = False):
 
@@ -19,6 +20,7 @@ class ApiPageToken(JsonDatatypeABC):
         self.validate_argument_type(channel_id, {str, None})
         self.validate_argument_type(playlist_id, {str, None})
         self.validate_argument_type(search_query, {str, None})
+        self.validate_argument_type(max_results, {int, None})
         self.validate_argument_type(token, {str, None})
         self.validate_argument_type(is_last_page, {bool})
 
@@ -26,6 +28,7 @@ class ApiPageToken(JsonDatatypeABC):
         self._channel_id = channel_id
         self._playlist_id = playlist_id
         self._search_query = search_query
+        self._max_results = max_results
         self._token = token
         self._is_last_page = is_last_page
 
@@ -56,6 +59,13 @@ class ApiPageToken(JsonDatatypeABC):
     def search_query(self) -> str | None:
         """ the search query text if provided """
         return self._search_query
+
+    @property
+    @json_include
+    @constructor_include
+    def max_results(self) -> int | None:
+        """ the maximum number of results to return """
+        return self._max_results
 
     @property
     @json_include

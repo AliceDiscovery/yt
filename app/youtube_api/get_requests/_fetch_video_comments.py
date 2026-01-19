@@ -10,7 +10,8 @@ from .request_datatypes.elements import JsonCommentElement
 
 def fetch_video_comments(page_token: ApiPageToken) -> PageType:
     """ fetches YouTube comments on a video """
-    max_results = 100
+    max_results = max(0, min(page_token.max_results or 100, 100))
+
 
     def convert_comments(comment_response: dict, video_uploader_id: str) -> List[JsonCommentElement]:
         def convert_single_comment(snippet: dict, comment_id: str) -> JsonCommentElement:
@@ -78,6 +79,7 @@ def fetch_video_comments(page_token: ApiPageToken) -> PageType:
     new_page_token = ApiPageToken(
         video_id=page_token.video_id,
         channel_id=channel_id,
+        max_results=max_results,
         token=new_token,
         is_last_page=(new_token is None)
 

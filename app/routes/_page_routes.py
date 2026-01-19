@@ -24,7 +24,7 @@ def home():
     channels = [
         {
             "info": youtube.fetch_channel_info(s),
-            "token": ApiPageToken(channel_id=s).json_compatible_serialize_data()
+            "token": ApiPageToken(channel_id=s, max_results=5).json_compatible_serialize_data()
         }
     for s in list_subscribed_channels(current_user.id)]
 
