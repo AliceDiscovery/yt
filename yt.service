@@ -6,7 +6,7 @@ After=network.target
 User=yt
 WorkingDirectory=/srv/yt/
 Environment="PATH=/srv/yt/.venv/bin"
-ExecStart=/srv/yt/.venv/bin/gunicorn --workers 3 --bind unix:/tmp/yt.socket -m 007 wsgi:app
+ExecStart=/srv/yt/.venv/bin/gunicorn --workers 3 --bind unix:/tmp/yt.socket -m 777 wsgi:app
 
 [Install]
 WantedBy=multi-user.target
