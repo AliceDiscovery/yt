@@ -4,7 +4,6 @@ After=network.target
 
 [Service]
 User=yt
-Group=www-data
 WorkingDirectory=/srv/yt/
 Environment="PATH=/srv/yt/.venv/bin"
 ExecStart=/srv/yt/.venv/bin/gunicorn --workers 3 --bind unix:/tmp/yt.socket -m 007 wsgi:app
